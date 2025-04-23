@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="max-width: 900px; margin: 50px auto; padding: 40px; background-color: #e6f0ff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 255, 0.2); min-height: 600px;">
+        <h2 style="text-align: center; color: #004080; margin-bottom: 35px;">📚 Yangi kitob qo'shish</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                {{ form.as_p }}
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="background-color: #0066cc; border-color: #005cbf; padding: 10px 30px; font-size: 16px;">
+                    💾 Saqlash
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

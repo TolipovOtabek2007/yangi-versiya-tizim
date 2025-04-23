@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg" style="max-width: 500px; width: 100%; border-radius: 10px;">
+        <div class="card-header bg-light text-center" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <h4 class="text-primary mb-0">Formani To'ldiring</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ forms.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+                <a href="{% url 'add_reference' %}" class="btn btn-secondary">Bekor qilish</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

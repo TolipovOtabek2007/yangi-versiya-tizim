@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-danger">Diqqat!</h2>
+    <p>Siz rostdan ham "{{ object }}" ma'lumotini o‘chirib tashlamoqchimisiz?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Ha, o‘chirish</button>
+        <a href="javascript:history.back()" class="btn btn-secondary">Bekor qilish</a>
+    </form>
+</div>
+{% endblock %}
