@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0 text-white">Xodim To'lovini Qo'shish</h4>
+        </div>
+        <div class="card-body">
+            <form action="" method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    {{ forms.as_p }}
+                </div>
+                
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success px-4">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

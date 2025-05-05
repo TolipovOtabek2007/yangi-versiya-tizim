@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}<span class="text-white">chiqim Qo'shish</span>{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary">
+            <h2 class="card-title text-white">Yangi chiqim qo'shish</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Saqlash</button>
+                <a href="{% url 'cost_list' %}" class="btn btn-secondary">Orqaga</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

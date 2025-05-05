@@ -1,0 +1,71 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Sarlavha va Ortga qaytish tugmasi -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold"><i class="fas fa-shopping-cart"></i> Yangi Xarid Qo'shish</h2>
+        <a href="{% url 'purchase_list' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2 shadow-sm">
+            <i class="fas fa-arrow-left"></i> Ortga
+        </a>
+    </div>
+
+    <!-- Forma kartochka uslubida -->
+    <div class="card shadow-lg border-0 p-4 rounded-4 bg-white">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="row g-4">
+                {% for field in form %}
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        {{ field }}
+                        <label class="fw-semibold text-muted">{{ field.label }}</label>
+                    </div>
+                    {% if field.errors %}
+                        <div class="text-danger mt-1 small">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Yuborish tugmasi -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-5 py-2 shadow-sm rounded-pill">
+                    <i class="fas fa-check-circle"></i> Xaridni Saqlash
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Forma maydonlari uchun bezak */
+    .form-floating input,
+    .form-floating select {
+        border: 2px solid #1E90FF; /* Ko'k border */
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    /* Fokuslangan maydon */
+    .form-floating input:focus,
+    .form-floating select:focus {
+        border-color: #1E90FF;
+        box-shadow: 0px 0px 10px rgba(30, 144, 255, 0.3);
+    }
+
+    /* Tugmalarni hover effekti */
+    .btn-outline-secondary:hover {
+        background-color: #1E90FF;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #1E90FF;
+    }
+</style>
+{% endblock %}

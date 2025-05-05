@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h3 class="mb-0 fw-bold text-uppercase text-white"><i class="bi bi-journal-text me-2"></i>Ma'lumotnoma</h3>
+            <a href="{% url 'add_reference' %}" class="btn btn-light fw-semibold shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Qo'shish
+            </a>
+        </div>
+
+        <div class="card-body bg-light rounded-bottom-4">
+            {% if reference_values %}
+            <div class="accordion" id="accordionExample">
+                {% for name, items in reference_values.items %}
+                <div class="accordion-item border-0 shadow-sm mb-3">
+                    <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false"
+                                aria-controls="collapse{{ forloop.counter }}">
+                            <i class="bi bi-folder-fill text-primary me-2"></i>{{ name }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+                         aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-white rounded-3">
+
+                            <div class="accordion" id="subAccordion{{ forloop.counter }}">
+                                {% for item in items %}
+                                <div class="accordion-item border mb-2 rounded">
+                                    <h2 class="accordion-header" id="subHeading{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                        <button class="accordion-button collapsed text-dark fw-bold py-2" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#subCollapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                                aria-expanded="false"
+                                                aria-controls="subCollapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                            {{ item.value }}
+                                        </button>
+                                    </h2>
+                                    <div id="subCollapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                         class="accordion-collapse collapse"
+                                         aria-labelledby="subHeading{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                         data-bs-parent="#subAccordion{{ forloop.counter }}">  <!-- ⚠️ MUHIM YANGILIK -->
+                                        <div class="accordion-body">
+                                            <div class="d-flex justify-content-end">
+                                                <a href="{% url 'update_reference' item.id %}" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="bi bi-pencil-square"></i> Tahrirlash
+                                                </a>
+                                                <a href="{% url 'delete_reference' item.id %}" class="btn btn-outline-danger btn-sm">
+                                                    <i class="bi bi-trash3-fill"></i> O‘chirish
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center mt-4">
+                <i class="bi bi-info-circle-fill me-2"></i> Hozircha hech qanday ma'lumot mavjud emas.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

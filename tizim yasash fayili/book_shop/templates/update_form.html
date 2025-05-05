@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Ma'lumotni tahrirlash</h2>
+    <div class="card p-4 shadow-lg">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Saqlash</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

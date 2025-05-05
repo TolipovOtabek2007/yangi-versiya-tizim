@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Yangi Ish Qo‘shish{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="text-primary text-center mb-4">Yangi Ish Qo‘shish</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_staff" class="form-label">Xodim</label>
+                {{ form.staff }}
+            </div>
+            <div class="mb-3">
+                <label for="id_hourly_rate" class="form-label">Soatlik stavka</label>
+                {{ form.hourly_rate }}
+            </div>
+            <div class="mb-3">
+                <label for="id_hired_date" class="form-label">Ishga kirgan sana</label>
+                {{ form.hired_date }}
+            </div>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'job_list' %}" class="btn btn-secondary">Orqaga</a>
+                <button type="submit" class="btn btn-primary">Saqlash</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 500px;
+        margin: auto;
+        border-radius: 10px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

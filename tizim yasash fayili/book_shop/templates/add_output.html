@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Yangi Sotuv Qo'shish</h1>
+    <div class="card shadow p-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Saqlash</button>
+            <a href="{% url 'output_list' %}" class="btn btn-secondary">Orqaga</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

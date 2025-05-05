@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3>Yangi hodim qo'shish</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.full_name.label_tag }} {{ form.full_name }}
+                {{ form.birthday.label_tag }} {{ form.birthday }}
+                
+                <div class="form-group">
+                    <label for="gender">Jinsi:</label>
+                    {{ form.gender }}
+                </div>
+                
+                {{ form.phone_number.label_tag }} {{ form.phone_number }}
+                {{ form.experience.label_tag }} {{ form.experience }}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li><strong>{{ field }}:</strong> {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success  px-4 py-2 fw-bold mt-3">Saqlash</button>
+                    <a href="{% url 'staff_list' %}" class="btn btn-secondary  px-4 py-2 fw-bold mt-3">Orqaga</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

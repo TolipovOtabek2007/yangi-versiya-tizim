@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}Hodimlar Ro'yxati{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Hodimlar Ro'yxati</h2>
+        <a href="{% url 'add_staff' %}" class="btn btn-primary">Yangi hodim qo'shish</a>
+    </div>
+
+    <!-- 🔍 Filtr qismi -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <h5>Hodimlarni Filtrlash</h5>
+        <form method="GET">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="name" class="form-control" placeholder="Ism bo‘yicha qidirish..." value="{{ request.GET.name }}">
+                </div>
+                <div class="col-md-2">
+                    <select name="gender" class="form-control">
+                        <option value="">Jins tanlang</option>
+                        <option value="Erkak" {% if request.GET.gender == "Erkak" %}selected{% endif %}>Erkak</option>
+                        <option value="Ayol" {% if request.GET.gender == "Ayol" %}selected{% endif %}>Ayol</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="phone" class="form-control" placeholder="Telefon raqam..." value="{{ request.GET.phone }}">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" name="experience" class="form-control" placeholder="Tajriba (yil)..." value="{{ request.GET.experience }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filtr</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 📌 Hodimlar ro‘yxati -->
+    {% if staff_list %}
+        <div class="table-responsive shadow-sm">
+            <table class="table table-bordered table-hover">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Ism</th>
+                        <th>Tug‘ilgan sana</th>
+                        <th>Jins</th>
+                        <th>Telefon</th>
+                        <th>Tajriba</th>
+                        <th>balance</th>
+                        <th>Ishga kirgan sana</th>
+                        <th>Amallar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staff_list %}
+                    <tr>
+                        <td><strong>{{ staff.full_name }}</strong></td>
+                        <td>{{ staff.birthday }}</td>
+                        <td>{{ staff.gender }}</td>
+                        <td>{{ staff.phone_number }}</td>
+                        <td>{{ staff.experience }} yil</td>
+                        <td>
+                            {% if staff.job_set.all %}
+                                {{ staff.job_set.first.hourly_rate }} so‘m
+                            {% else %}
+                                Noma’lum
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if staff.job_set.all %}
+                                {{ staff.job_set.first.hired_date }}
+                            {% else %}
+                                Noma’lum
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'update_staff' staff.id %}" class="btn btn-warning btn-sm me-1">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'delete_staff' staff.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Hodimni o‘chirishni tasdiqlaysizmi?');">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-muted">Hozircha hodimlar mavjud emas.</p>
+    {% endif %}
+</div>
+
+<!-- 📌 Xodimlar bo‘limi -->
+<div class="card mt-3 p-4">
+    <h3 class="text-center mb-4 custom-title">Kitob Magazin Xodimlari</h3>
+    <style>
+
+        .custom-title {
+            color: #007bff; /* Ko‘k rang (Bootstrap primary blue) */
+            font-weight: bold; /* Qalinroq matn */
+            text-transform: uppercase; /* Harflarni katta qilish */
+            letter-spacing: 1.5px; /* Harflar orasini ochish */
+        }
+
+        
+        .nav-tabs .nav-link {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #ffffff !important;
+            border-radius: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+    
+        .nav-tabs .nav-link:hover {
+            background: linear-gradient(135deg, #0056b3, #004494);
+            color: #ffffff !important;
+        }
+    
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #004494, #002766);
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+            color: #ffffff !important;
+        }
+
+        .custom-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Oq soya effekti */
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+    
+
+    <!-- 🟢 Tabs menyusi + balans -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button" role="tab" aria-controls="payments" aria-selected="true">Xodim To‘lovlari</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="jobs-tab" data-bs-toggle="tab" data-bs-target="#jobs" type="button" role="tab" aria-controls="jobs" aria-selected="false">Ishlar</button>
+        </li>
+    </ul>
+    
+    <!-- 🔵 Balans ko‘rsatkich -->
+    <div class="ms-3">
+        <span class="badge bg-light text-primary border border-primary fw-bold rounded-pill">Balans: {{total_balance}} so'm</span>
+
+    </div>
+</div>
+
+    
+
+    <!-- 📌 Tabs mazmuni -->
+    <div class="custom-container">
+        <div class="tab-content" id="myTabContent">
+            <!-- 💰 Xodim To‘lovlari -->
+            <div class="tab-pane fade show active" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{% url 'staff_payment_create' %}" class="btn btn-primary ">To‘lov Qo‘shish</a>
+                </div>
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Ism</th>
+                            <th>Oylik To‘lov</th>
+                            <th>Sana</th>
+                            <th>Qarzdorlik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in staff_payment_list %}
+                        <tr>
+                            <th>{{ forloop.counter }}</th>
+                            <td>{{ payment.staff }}</td>
+                            <td>{{ payment.price }} so‘m</td>
+                            <td>{{ payment.created_at }}</td>
+                            <td>{{ payment.staff.debt }} so‘m</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- 👷 Ishlar -->
+            <div class="tab-pane fade" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{% url 'add_job' %}" class="btn btn-primary">Ish Qo‘shish</a>
+                </div>
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Ism</th>
+                            <th>Soatlik maosh</th>
+                            <th>Ishga kirgan sana</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for staff in staff_jobs %}
+                        <tr>
+                            <th>{{ forloop.counter }}</th>
+                            <td>{{ staff.staff }}</td>
+                            <td>{{ staff.hourly_rate }} so‘m</td>
+                            <td>{{ staff.hired_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
