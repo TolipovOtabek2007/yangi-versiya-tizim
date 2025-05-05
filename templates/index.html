@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Bosh sahifa{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Xush kelibsiz! Bizning Kitoblar Magazini</h1>
+<p class="text-center">Bizning do'konimizda barcha turdagi kitoblarni topishingiz mumkin.</p>
+<a href="{% url 'books_list' %}" class="btn btn-primary">Kitoblarni ko'rish</a>
+{% endblock %}

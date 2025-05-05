@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Buyurtma tasdiqlash{% endblock %}
+
+{% block content %}
+<h2>Buyurtma tasdiqlash</h2>
+<p><strong>Kitob:</strong> {{ book.name }}</p>
+<p><strong>Soni:</strong> {{ quantity }}</p>
+<p><strong>Umumiy narx:</strong> {{ total_price }} so'm</p>
+<a href="/" class="btn btn-success">Bosh sahifaga qaytish</a>
+{% endblock %}

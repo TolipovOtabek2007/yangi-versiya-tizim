@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Font Awesome ikonlar -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    .clamp {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        transition: all 0.3s ease;
+    }
+
+    .expanded {
+        -webkit-line-clamp: unset;
+    }
+
+    .btn-toggle {
+        padding: 0;
+        font-size: 0.9rem;
+        color: #007bff;
+        border: none;
+        background: none;
+    }
+
+    .btn-toggle:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- JS bundle (Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="card shadow-lg border-0 rounded-3 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-primary">📚 Kitoblar Ro'yxati</h1>
+            <a href="{% url 'add_book' %}" class="btn btn-primary px-4 py-2">
+                <i class="fas fa-plus"></i> Yangi Kitob Qo'shish
+            </a>
+        </div>
+
+        <!-- Filtrlash formasi -->
+        <form method="GET" class="mb-4">
+            <div class="row g-2">
+                <div class="col-md-3">
+                    <input type="text" name="book_name" class="form-control" placeholder="Kitob nomi" value="{{ request.GET.book_name }}">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="author" class="form-control" placeholder="Muallif" value="{{ request.GET.author }}">
+                </div>
+                <div class="col-md-3">
+                    <input type="date" name="publish_date" class="form-control" value="{{ request.GET.publish_date }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Kitoblar ro‘yxati -->
+        <div class="row" style="max-height: 600px; overflow-y: auto;">
+            {% for book in books %}
+            <div class="col-md-4 mb-4">
+                <div class="book-card">
+                    <div class="card shadow-sm border-0 rounded-3 position-relative book-card-inner">
+                        <img src="{{ book.image.url }}" class="card-img-top rounded-top" alt="{{ book.name }}" style="height: 250px; object-fit: cover;">
+
+                        <!-- Menyu -->
+                        <div class="dropdown position-absolute top-0 end-0 m-2">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu{{ book.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu{{ book.id }}">
+                                <li>
+                                    <a class="dropdown-item text-warning" href="{% url 'update_book' book.id %}">
+                                        <i class="fas fa-edit"></i> Tahrirlash
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{% url 'delete_book' book.id %}" 
+                                       onclick="return confirm('Siz rostdan ham ushbu kitobni o‘chirmoqchimisiz?');">
+                                        <i class="fas fa-trash-alt"></i> O‘chirish
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title text-dark fw-bold">{{ book.name }}</h5>
+                            <p class="card-text text-dark fw-bold"><strong>Kategoriya:</strong> {{ book.category }}</p>
+                            <p class="card-text text-dark fw-bold"><strong>Narxi:</strong> <span class="text-success">{{ book.price }} so'm</span></p>
+                            <p class="card-text text-dark fw-bold"><strong>Kitob soni:</strong> {{ book.quantity }} ta</p>
+
+                            <!-- Description qisqa -->
+                            <p class="card-text text-dark fw-bold">
+                                <strong>Haqida:</strong>
+                                <span id="desc-{{ book.id }}" class="book-description clamp">{{ book.description }}</span>
+                                <br>
+                                <button class="btn-toggle" onclick="toggleDesc({{ book.id }})" id="btn-{{ book.id }}">Ko'proq</button>
+                            </p>
+
+                            <p class="card-text"><small class="text-secondary">📅 Qo'shilgan sana: {{ book.creat_at|date:"d.m.Y" }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">Hozircha kitoblar mavjud emas.</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- JS: description toggle -->
+<script>
+    function toggleDesc(bookId) {
+        const desc = document.getElementById("desc-" + bookId);
+        const btn = document.getElementById("btn-" + bookId);
+
+        desc.classList.toggle("expanded");
+        if (desc.classList.contains("expanded")) {
+            btn.innerText = "Yopish";
+        } else {
+            btn.innerText = "Ko'proq";
+        }
+    }
+</script>
+{% endblock %}

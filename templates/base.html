@@ -1,0 +1,394 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{% static '/assets/vendor/fonts/boxicons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static '/assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static '/assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static '/assets/css/demo.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+
+    <link rel="stylesheet" href="{% static '/assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{% static '/assets/vendor/js/helpers.js' %}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static '/assets/js/config.js' %}"></script>
+    <title>Mahsulotlar Ro'yxati</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+      
+     .card {
+          margin-top: 20px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .table thead th {
+          background-color: #f8f9fa;
+          font-weight: bold;
+          text-align: center;
+      }
+      .btn-view {
+          color: #fff;
+          background-color: #007bff;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+          text-decoration: none;
+          font-size: 0.9rem;
+      }
+      .btn-view:hover {
+          background-color: #0056b3;
+      }
+      body {
+        background: linear-gradient(to right, white, white); /* Ranglar o'zgaradi */
+    }
+    @keyframes changeBackground {
+      0% { background-color: #ff7e5f; }
+      50% { background-color: #feb47b; }
+      100% { background-color: #3498db; }
+  }
+  .menu-inner-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  .menu-inner {
+    list-style: none;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin-bottom: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .nav-link:hover {
+    background: #f0f0f0;
+    transform: translateX(5px);
+  }
+
+  .nav-link i {
+    background: #e0e0e0;
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 18px;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .nav-link:hover i {
+    background: #007bff;
+    color: #fff;
+  }
+  
+    .app-brand-text {
+      
+      font-size: 28px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #1E90FF, #1E90FF); /* To'q havo rangi gradienti */
+      -webkit-background-clip: text; /* Gradientni matn orqasiga joylash */
+      -webkit-text-fill-color: transparent; /* Matn ichini shaffof qilish */
+      display: inline-block;
+      text-transform: uppercase; /* Harflarni katta qilish */
+      letter-spacing: 2px; /* Harflar orasini kengaytirish */
+     
+    }
+    
+  
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px rgba(0, 95, 115, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(0, 95, 115, 0.8); }
+    }
+  
+    .logo-container {
+      display: flex;
+     
+      align-items: center;
+      gap: 10px; /* Kitob ikonka va matn orasidagi bo'shliq */
+    }
+  
+    .logo-icon {
+      font-size: 35px;
+      color: #1E90FF; /* Havo rangi */
+      
+    }
+  
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+
+  </style>
+
+
+  
+  </head>
+
+  <body>
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="{% url 'book_list' %}" class="app-brand-link">
+             
+             
+                <!-- Logotip uchun ikonka -->
+                <div class="logo-container">
+                  <i class="bx bx-book logo-icon"></i>
+                  <span class="app-brand-text">Kitoblar</span>
+                </div>
+            
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+          
+
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <!-- Kitoblar -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'book_list'  %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-book me-2 fs-5"></i>
+                  <span>Kitoblar</span>
+                </a>
+              </li>
+            </div>
+          
+            <!-- Xarid -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'purchase_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-cart me-2 fs-5"></i>
+                  <span>Xarid</span>
+                </a>
+              </li>
+            </div>
+            <!-- Daromad -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                  <a href="{% url 'income_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                      <!-- Daromadga mos ikonka qo'yildi -->
+                      <i class="bx bx-wallet me-2 fs-5"></i>
+                      <span>Daromad</span>
+                  </a>
+              </li>
+          </div>
+          
+          
+          
+            <!-- Sotuv -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'output_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-dollar me-2 fs-5"></i>
+                  <span>Sotuv</span>
+                </a>
+              </li>
+            </div>
+          
+            <!-- Hodim -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'staff_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-group me-2 fs-5"></i>
+                  <span>Hodim</span>
+                </a>
+              </li>
+            </div>
+          
+            <!-- Chiqim -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'cost_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-credit-card me-2 fs-5"></i>
+                  <span>Chiqim</span>
+                </a>
+              </li>
+            </div>
+          
+            <!-- Ma'lumotnoma -->
+            <div class="d-flex justify-content-start ps-3">
+              <li class="nav-item w-100">
+                <a href="{% url 'reference_list' %}" class="nav-link text-dark fw-bold d-flex align-items-center">
+                  <i class="bx bx-info-circle me-2 fs-5"></i>
+                  <span>Ma'lumotnoma</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+          
+            
+          
+            
+
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <form action="" class="d-flex" method="get">
+                    <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Qidiruv..."
+                    aria-label="Search..."
+                    name="search"
+                    />
+                    <div class="d-flex gap-1">
+                      <input type="submit" value="Qidiruv" class="btn btn-primary">
+                      <input type="submit" name="books" value="Barchasi" class="btn btn-secondary">
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                  <!-- Place this tag where you want the button to render. -->
+                  <li>
+                    {% if not user.is_authenticated %}
+                        <a class="btn btn-danger" href="{% url 'login' %}">
+                            <i class="bx bx-log-in me-1"></i> Login
+                        </a>
+                    {% else %}
+                        <a class="btn btn-danger" href="{% url 'logout' %}">
+                            <i class="bx bx-log-in me-1"></i> Log Out
+                        </a>
+                    {% endif %}
+                </li>
+                
+
+                
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper " >
+
+            {% block content %}{% endblock %}
+            
+           
+           
+
+            <div class="content-backdrop fade"> </div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static './assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static '/assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static '/assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script src="{% static '/assets/vendor/js/menu.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{% static '/assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static '/assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script src="{% static '/assets/js/dashboards-analytics.js' %}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="{% static 'https://buttons.github.io/buttons.js' %}"></script>
+  </body>
+</html>
